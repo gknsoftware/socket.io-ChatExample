@@ -17,7 +17,7 @@ var io = socket(server);
 
 
 io.on('connection', function(socket){
-	console.log('a user connected');
+	console.log('a user connectedx');
 
 	socket.on('chat', function(data) {
 		io.emit('chat', data);
