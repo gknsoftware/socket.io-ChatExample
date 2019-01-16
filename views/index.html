@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Example Chat App</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col">-</div>
+            <div class="col-5">
+                <ul id="output" class="list-group my-5"></ul>
+
+                <div class="form-group">
+                    <input type="text" class="form-control mb-2" id="handler" placeholder="Kullanıcı adı" autocomplete="off">
+                    <input type="text" class="form-control mb-2" id="message" placeholder="Mesaj yazın" autocomplete="off">
+                    <button id="send" class="btn btn-primary float-right">Gönder</button>
+                </div>
+            </div>
+            <div class="col">-</div>
+        </div>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/chat.js"></script>
+</body>
+</html>
