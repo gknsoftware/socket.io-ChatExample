@@ -4,10 +4,7 @@
 	box-sizing: border-box;
 }
 .form-control:focus {
-  border-color: inherit;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-#output{
-	height: 500px !important;
+	border-color: inherit;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }

@@ -1,29 +1,51 @@
+// Make connection
 var socket = io();
+var timeout;
 
+// Query DOM
 var btn = document.getElementById('send'),
-	handler = document.getElementById('handler'),
+	handle = document.getElementById('handle'),
 	message = document.getElementById('message'),
 	output = document.getElementById('output'),
 	feedback = document.getElementById('feedback')
 
+// Emit events
 btn.addEventListener('click', function() {
-	socket.emit('chat', {
+	socket.emit('send message', {
 		message: message.value,
-		handler: handler.value
+		handle: handle.value
 	});
-});
 
-message.addEventListener('keypress', function() {
-	socket.emit('typing', handler.value);
-});
-
-socket.on('chat', function(data) {
 	message.value = "";
-	feedback.innerHTML = "";
+});
 
-	output.innerHTML += '<li class="list-group-item d-flex align-items-center"><strong>' + data.handler + '&nbsp;</strong> ' + data.message + '</li>';
+message.addEventListener('keypress', function(e) {
+	if (e.keyCode == 13) {
+		socket.emit('send message', {
+			message: message.value,
+			handle: handle.value
+		});
+
+		message.value = "";
+	}else{
+		socket.emit('typing', handle.value);
+		clearTimeout(timeout);
+		timeout = setTimeout(function() {
+			socket.emit('typing', false);
+		}, 1000);
+	}
+});
+
+// Listener for events
+socket.on('new message', function(data) {
+	feedback.innerHTML = "";
+	output.innerHTML += '<li class="list-group-item d-flex align-items-center"><strong>' + data.handle + '&nbsp;</strong> ' + data.message + '</li>';
 });
 
 socket.on('typing', function(data) {
-	feedback.innerHTML = '<p><em>' + data + ' is typing a message...</em></p>';
+	if (data) {
+		feedback.innerHTML = '<p><em>' + data + ' is typing a message...</em></p>';
+	}else{
+		feedback.innerHTML = "";
+	}
 });
