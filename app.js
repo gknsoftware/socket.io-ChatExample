@@ -21,17 +21,35 @@ io.on('connection', function(socket){
 	connections.push(socket);
 	console.log('Connected: %s user connected', connections.length);
 
-	socket.on('send message', function(data) {
-		io.emit('new message', data);
-	});
-
-	socket.on('typing', function(data) {
-		socket.broadcast.emit('typing', data);
-	});
-
+	// Disconnect
 	socket.on('disconnect', function(data) {
+		if (socket.username != undefined)
+			users.splice(users.indexOf(socket.username), 1);
+			updateUsernames();
 		connections.splice(connections.indexOf(socket), 1);
 		console.log('Disconnected: %s user connected', connections.length);
 	});
+
+	// Typing message
+	socket.on('typing', function(data) {
+		socket.broadcast.emit('typing', {username: socket.username, typing: data});
+	});
+
+	// Senc message
+	socket.on('send message', function(data) {
+		io.emit('new message', {message: data, username: socket.username});
+	});
+
+	// New user
+	socket.on('new user', function(data, callback) {
+		callback(true);
+		socket.username = data;
+		users.push(socket.username);
+		updateUsernames();
+	});
+
+	function updateUsernames() {
+		io.emit('get users', users);
+	}
 });
 

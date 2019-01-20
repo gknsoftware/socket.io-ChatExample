@@ -10,18 +10,29 @@
 <body>
     
     <div class="container my-5">
-        <div class="row">
+        <div id="LoginChatRoom" class="row">
+            <div class="col-md-6 offset-md-3">
+
+                <div class="form-group">
+                    <input type="text" class="form-control mb-2" id="username" placeholder="Kullanıcı adı" autocomplete="off">
+                    <button id="login" class="btn btn-primary float-right">Giriş</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="ChatRoom" class="row">
             <div class="col-md-8">
                 <ul id="output" class="list-group"></ul>
                 <div id="feedback"></div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control mb-2" id="handle" placeholder="Kullanıcı adı" autocomplete="off">
                     <input type="text" class="form-control mb-2" id="message" placeholder="Mesaj yazın" autocomplete="off">
-                    <button id="send" class="btn btn-primary float-right">Gönder</button>
                 </div>
             </div>
-            <div class="col-md-4 card card-body bg-light">asdasdsa</div>
+            <div class="col-md-4 card card-body bg-light">
+                <ul id="logged_in_users" class="list-group"></ul>
+            </div>
         </div>
     </div>
     
